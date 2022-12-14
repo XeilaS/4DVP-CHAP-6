@@ -1,7 +1,7 @@
 name: "Super linter"
 on:
   pull_request:
-    branches: [main, demo]
+    branches: [main]
 jobs:
   lint:
     name: Lint Code Base
