@@ -4,13 +4,20 @@ jobs:
   semgrep:
     name: Semgrep
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
     container: # Use a container​
       image: returntocorp/semgrep:1.1.0
     steps:
       - name: "Checkout source"
         uses: actions/checkout@v3
       - name: "Execute semgrep"
-        run: semgrep ci
+        run: semgrep ci --sarif --output=semgrep.sarif
         env:
          # Specify the ruleset to use​
           SEMGREP_RULES: p/default
+      - name: "Upload SARIF file for GitHub CodeQL"
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: semgrep.sarif
