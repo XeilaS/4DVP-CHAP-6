@@ -1,17 +1,78 @@
-name: "Super linter"
+---
+#################################
+#################################
+## Super Linter GitHub Actions ##
+#################################
+#################################
+name: Lint Code Base
+
+#############################
+# Start the job on all push #
+#############################
 on:
   pull_request:
-    branches: []
+    branches: [master, main]
+
+###############
+# Set the Job #
+###############
 jobs:
-  lint:
+  build:
+    # Name the Job
     name: Lint Code Base
+    # Set the agent to run on
     runs-on: ubuntu-latest
-    if: (github.actor != 'dependabot[bot]')
+
+    ##################
+    # Load all steps #
+    ##################
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-    - name: 'Lint Code Base'
-      uses: github/super-linter/slim@v4
-      env:
-        VALIDATE_ALL_CODEBASE: true
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # needed to get access to PR​
+      ##########################
+      # Checkout the code base #
+      ##########################
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          # Full git history is needed to get a proper
+          # list of changed files within `super-linter`
+          fetch-depth: 0
+
+      ################################
+      # Run Linter against code base #
+      ################################
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# name: "Super linter"
+# on:
+#   pull_request:
+#     branches: []
+# jobs:
+#   lint:
+#     name: Lint Code Base
+#     runs-on: ubuntu-latest
+#     if: (github.actor != 'dependabot[bot]')
+#     steps:
+#     - name: Checkout Code
+#       uses: actions/checkout@v3
+#     - name: 'Lint Code Base'
+#       uses: github/super-linter/slim@v4
+#       env:
+#         VALIDATE_ALL_CODEBASE: true
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # needed to get access to PR​
