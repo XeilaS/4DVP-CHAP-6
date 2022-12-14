@@ -1,5 +1,4 @@
-name: "Super linter"​
-
+name: "Super linter"
 on:
   pull_request:
     branches: [master, main]
