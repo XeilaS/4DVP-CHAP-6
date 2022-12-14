@@ -6,6 +6,8 @@ jobs:
     name: "Hadolint scan"
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout
       - name: Run hadolint
         uses: hadolint/hadolint-action@v2.1.0
         with:
