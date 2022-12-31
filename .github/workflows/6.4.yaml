@@ -14,7 +14,7 @@ jobs:
       - name: Run hadolint
         uses: hadolint/hadolint-action@v2.1.0
         with:
-          dockerfile: ./Dockerfile
+          dockerfile: .
           format: sarif
           output-file: hadolint-results.sarif
       - name: Upload analysis results to GitHub
