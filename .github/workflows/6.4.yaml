@@ -11,13 +11,15 @@ jobs:
     # don't execute this workflow for dependabot pr
     if: (github.actor != 'dependabot[bot]')
     steps:
-    - uses: actions/checkout@v2 
-    - uses: hadolint/hadolint-action@v2.1.0
-      with:
-        dockerfile: .
-    - name: "Upload analysis results to GitHub"
-      uses: github/codeql-action/upload-sarif@v2
-      if: always()
-      with:
-        sarif_file: hadolint-results.sarif
-        wait-for-processing: true
+      - name: Run hadolint
+        uses: hadolint/hadolint-action@v2.1.0
+        with:
+          dockerfile: ./Dockerfile
+          format: sarif
+          output-file: hadolint-results.sarif
+      - name: Upload analysis results to GitHub
+        uses : github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: hadolint-results.sarif
+          wait-for-processing: true
